@@ -1,0 +1,27 @@
+@import url(token.css);
+@import "tailwindcss";
+
+@theme {
+  --color-light-gray: var(--light-gray);
+  --color-dark-gray: var(--dark-gray);
+  --color-primary-red: var(--primary-red);
+  --text-normal: var(--font-normal);
+  --text-small: var(--font-small);
+  --text-large: var(--font-large);
+}
+
+
+.link:hover {
+  color: var(--primary-red);
+  cursor: pointer;
+}
+
+.container {
+  width: 95%;
+  margin: auto;
+}
+
+.form-field {
+  margin: 1rem 0;
+  width: 100%;
+}

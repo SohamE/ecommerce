@@ -1,0 +1,8 @@
+:root {
+  --light-gray: rgb(229, 231, 235);
+  --dark-gray: rgb(62, 62, 62);
+  --font-normal: 16px;
+  --font-small: 14px;
+  --font-large: 20px;
+  --primary-red: #ff5252;
+}
