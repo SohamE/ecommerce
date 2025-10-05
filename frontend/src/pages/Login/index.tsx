@@ -1,16 +1,23 @@
-import { Link } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { login } from "../../api/auth";
 import { AppError } from "../../types/errors";
 import ErrorAlert from "../../components/ErrorAlert";
+import useAuthContext from "../../hooks/useAuthContext";
 
 const Login = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<String | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { authState, updateUser } = useAuthContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authState.user) navigate("/");
+  }, []);
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,6 +32,7 @@ const Login = () => {
       setError(null);
       const response = await login({ email, password });
       console.log(response);
+      updateUser(response.user);
     } catch (e) {
       if (e instanceof AppError) {
         console.log(e.details);

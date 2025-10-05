@@ -1,11 +1,11 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { signup } from "../../api/auth";
 import ErrorAlert from "../../components/ErrorAlert";
-import { toast } from "react-toastify";
-import { AxiosError } from "axios";
 import { AppError } from "../../types/errors";
+import { useNavigate } from "react-router";
+import useAuthContext from "../../hooks/useAuthContext";
 
 const CONFIRM_PASSWORD_NOT_MATCHING = "Password is not matching";
 
@@ -17,6 +17,12 @@ const Register = () => {
   const [confirmPasswordError, setConfirmPassWordError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<String | null>(null);
+  const { authState } = useAuthContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authState.user) navigate("/");
+  }, []);
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -81,6 +81,8 @@ export const login = catchAsync(async (req, res) => {
   user.lastLogin = new Date();
   await user.save();
 
+  user.password = undefined;
+
   // Send success response
   res.status(200).json({
     status: "success",
