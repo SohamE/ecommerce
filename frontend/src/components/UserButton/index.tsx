@@ -1,6 +1,20 @@
 import { Link } from "react-router";
+import useAuthContext from "../../hooks/useAuthContext";
 
 const UserButton = () => {
+  const { authState } = useAuthContext();
+
+  if (authState.isAuthenticated) {
+    return (
+      <div className="">
+        <button>
+          <Link to="/logout" className="link mr-2">
+            Logout
+          </Link>
+        </button>
+      </div>
+    );
+  }
   return (
     <div className="">
       <button>

@@ -1,22 +1,19 @@
-import { catchAsync } from "../utils/catchAsync.js";
 import { mailTrapClient, sender } from "./mailtrap.config.js";
 
-export const sendVerificationEmail = catchAsync(
-  async (email, verificationToken) => {
-    const recipient = [{ email }];
-    const response = await mailTrapClient.send({
-      from: sender,
-      to: recipient,
-      subject: "Verify your email",
-      html: verificationToken,
-      category: "Email Verification",
-    });
+export const sendVerificationEmail = async (email, verificationToken) => {
+  const recipient = [{ email }];
+  const response = await mailTrapClient.send({
+    from: sender,
+    to: recipient,
+    subject: "Verify your email",
+    html: verificationToken,
+    category: "Email Verification",
+  });
 
-    console.log("Verification Email sent successfully", response);
-  }
-);
+  console.log("Verification Email sent successfully", response);
+};
 
-export const sendWelcomeEmail = catchAsync(async (email, name) => {
+export const sendWelcomeEmail = async (email, name) => {
   const recipients = [{ email }];
   const response = await mailTrapClient.send({
     from: sender,
@@ -28,4 +25,4 @@ export const sendWelcomeEmail = catchAsync(async (email, name) => {
   });
 
   console.log("Welcome Email sent successfully", response);
-});
+};

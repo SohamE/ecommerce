@@ -3,6 +3,8 @@ import Header from "../components/Header";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import GuestRoute from "../components/GuestRoute";
+import Logout from "../pages/Logout";
 
 const NavbarLayout = () => {
   return (
@@ -23,11 +25,23 @@ const baseRouter = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login />,
+        element: (
+          <GuestRoute>
+            <Login />
+          </GuestRoute>
+        ),
       },
       {
         path: "/register",
-        element: <Register />,
+        element: (
+          <GuestRoute>
+            <Register />
+          </GuestRoute>
+        ),
+      },
+      {
+        path: "/logout",
+        element: <Logout />,
       },
     ],
   },

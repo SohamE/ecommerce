@@ -17,12 +17,7 @@ const Register = () => {
   const [confirmPasswordError, setConfirmPassWordError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<String | null>(null);
-  const { authState } = useAuthContext();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (authState.user) navigate("/");
-  }, []);
+  const { updateUser, updateUserAuthentication } = useAuthContext();
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,14 +25,15 @@ const Register = () => {
       throw new Error("Email or Password Ref not mounted");
     const email = emailRef.current.value;
     const name = nameRef.current.value;
-    console.log(email + " " + password + " " + name);
+
     try {
       setIsLoading(true);
       setError(null);
-      await signup({ email, password, name });
+      const response = await signup({ email, password, name });
+      updateUser(response.data.user);
+      updateUserAuthentication(true);
     } catch (e) {
       if (e instanceof AppError) {
-        console.log(e.details);
         setError(e.message);
       } else if (e instanceof Error) {
         setError(e.message);

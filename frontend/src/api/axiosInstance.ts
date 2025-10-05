@@ -14,7 +14,7 @@ export const axiosAuthInstance = axios.create({
 });
 axiosAuthInstance.interceptors.request.use(request => { console.log(request); return request; });
 axiosAuthInstance.interceptors.response.use(
-  (response) => response.data,
+  (response) => response,
   (error: AxiosError<ApiError>) => {
     if (error.response) {
       const message = error.response.data.message || "An error occurred";

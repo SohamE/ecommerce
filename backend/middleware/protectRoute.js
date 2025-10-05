@@ -2,6 +2,7 @@ import { promisify } from "util";
 import jwt from "jsonwebtoken";
 import { catchAsync } from "../utils/catchAsync.js";
 import User from "../models/user.model.js";
+import AppError from "../utils/AppError.js";
 
 export const protectRoute = catchAsync(async (req, res, next) => {
   const token = req.cookies.token;
