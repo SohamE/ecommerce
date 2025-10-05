@@ -10,6 +10,7 @@ Create a generic ApiResponse type and have the data which changes depending on a
 
 ## current
 
+```
 src/
 ├── api/ # API calls
 │ ├── auth.ts
@@ -70,9 +71,11 @@ src/
 ├── App.tsx
 ├── main.tsx
 └── vite-env.d.ts
+```
 
 ## Feature based
 
+```
 src/
 ├── features/ # Feature-based organization
 │ ├── auth/
@@ -140,3 +143,4 @@ src/
 ├── App.tsx
 ├── main.tsx
 └── vite-env.d.ts
+```
