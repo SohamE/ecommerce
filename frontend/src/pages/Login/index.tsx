@@ -31,8 +31,7 @@ const Login = () => {
       setIsLoading(true);
       setError(null);
       const response = await login({ email, password });
-      console.log(response);
-      updateUser(response.user);
+      updateUser(response.data.user);
     } catch (e) {
       if (e instanceof AppError) {
         console.log(e.details);

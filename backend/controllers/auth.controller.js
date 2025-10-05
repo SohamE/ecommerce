@@ -36,6 +36,15 @@ export const signup = catchAsync(async (req, res) => {
   });
 });
 
+export const checkAuth = catchAsync(async (req, res) => {
+  res.status(200).json({
+    status: "success",
+    data: {
+      user: req.user,
+    },
+  });
+});
+
 export const verifyEmail = catchAsync(async (req, res) => {
   const { code } = req.body;
   const user = await User.findOne({
