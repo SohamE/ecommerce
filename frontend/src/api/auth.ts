@@ -17,7 +17,7 @@ type CheckAuthData = {
 
 export const signup = async ({ email, password, name }: signupType) => {
   const response = await axiosAuthInstance.post<ApiResponse<AuthData>>(`/signup`, { email, password, name });
-  return response;
+  return response.data;
 };
 
 export const login = async ({ email, password }: loginType): Promise<ApiResponse<AuthData>> => {
@@ -27,5 +27,10 @@ export const login = async ({ email, password }: loginType): Promise<ApiResponse
 
 export const checkAuth = async (): Promise<ApiResponse<CheckAuthData>> => {
   const response = await axiosAuthInstance.get<ApiResponse<CheckAuthData>>(`/check-auth`);
+  return response.data;
+};
+
+export const logout = async (): Promise<ApiResponse<undefined>> => {
+  const response = await axiosAuthInstance.get<ApiResponse<undefined>>(`/logout`);
   return response.data;
 };

@@ -25,7 +25,7 @@ export const signup = catchAsync(async (req, res) => {
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
-  await sendVerificationEmail(user.email, verificationToken);
+  // await sendVerificationEmail(user.email, verificationToken);
 
   res.status(201).json({
     status: "success",
@@ -60,7 +60,7 @@ export const verifyEmail = catchAsync(async (req, res) => {
   user.isVerified = true;
   await user.save();
 
-  await sendWelcomeEmail(user.email, user.name);
+  // await sendWelcomeEmail(user.email, user.name);
 
   res.status(200).json({
     status: "success",
@@ -70,7 +70,6 @@ export const verifyEmail = catchAsync(async (req, res) => {
 
 export const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.cookies.token);
   const user = await User.findOne({
     email,
   }).select("+password");
@@ -92,6 +91,7 @@ export const login = catchAsync(async (req, res) => {
 
   user.password = undefined;
 
+  console.log(`${user.name} has logged in successfully.`);
   // Send success response
   res.status(200).json({
     status: "success",
@@ -103,7 +103,7 @@ export const login = catchAsync(async (req, res) => {
 });
 
 export const logout = (req, res) => {
-  console.log(`${req.user.name} is logged out successfully.`);
+  console.log(`${req.user.name} has logged out successfully.`);
   res.clearCookie("token");
   res.status(200).json({
     status: "success",

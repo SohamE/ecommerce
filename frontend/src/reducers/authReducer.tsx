@@ -9,10 +9,10 @@ export type AuthType = {
 type ActionType =
   | {
       type: "AUTHENTICATE_USER";
-      payload: Boolean;
+      payload: AuthType["isAuthenticated"];
     }
-  | { type: "UPDATE_USER"; payload: UserType }
-  | { type: "SET_LOADER"; payload: Boolean };
+  | { type: "UPDATE_USER"; payload: AuthType["user"] }
+  | { type: "SET_LOADER"; payload: AuthType["isLoading"] };
 
 export const initialState: AuthType = {
   user: undefined,

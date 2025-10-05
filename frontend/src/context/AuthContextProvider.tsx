@@ -3,7 +3,6 @@ import {
   authReducer,
   initialState as authInitialState,
   type AuthType,
-  type UserType,
 } from "../reducers/authReducer";
 
 type AuthContextProviderPropsType = {
@@ -12,8 +11,8 @@ type AuthContextProviderPropsType = {
 
 type AuthContextType = {
   authState: AuthType;
-  updateUser: (userData: UserType) => void;
-  updateUserVerification: (valid: Boolean) => void;
+  updateUser: (userData: AuthType["user"]) => void;
+  updateUserAuthentication: (valid: AuthType["isAuthenticated"]) => void;
 };
 
 export const AuthProviderContext = createContext<AuthContextType | null>(null);
@@ -23,15 +22,15 @@ const AuthContextProvider: React.FC<AuthContextProviderPropsType> = ({
 }) => {
   const [authState, dispatch] = useReducer(authReducer, authInitialState);
 
-  const updateUser = (userData: UserType) =>
+  const updateUser = (userData: AuthType["user"]) =>
     dispatch({ type: "UPDATE_USER", payload: userData });
 
-  const updateUserVerification = (valid: Boolean) =>
+  const updateUserAuthentication = (valid: AuthType["isAuthenticated"]) =>
     dispatch({ type: "AUTHENTICATE_USER", payload: valid });
 
   return (
     <AuthProviderContext.Provider
-      value={{ authState, updateUser, updateUserVerification }}
+      value={{ authState, updateUser, updateUserAuthentication }}
     >
       {children}
     </AuthProviderContext.Provider>

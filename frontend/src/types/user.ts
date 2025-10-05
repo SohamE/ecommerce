@@ -1,9 +1,9 @@
 export type UserType = {
-  name: String;
-  email: String;
-  _id: String;
+  name: string;
+  email: string;
+  _id: string;
   lastLogin: Date;
   createdAt: Date;
   updatedAt: Date;
-  isVerified: Boolean;
+  isVerified: boolean;
 };

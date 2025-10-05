@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router";
+import { Link, Navigate, data, useNavigate } from "react-router";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React, { useEffect, useRef, useState } from "react";
@@ -12,12 +12,7 @@ const Login = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<String | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { authState, updateUser } = useAuthContext();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (authState.user) navigate("/");
-  }, []);
+  const { updateUser, updateUserAuthentication } = useAuthContext();
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,13 +20,12 @@ const Login = () => {
       throw new Error("Email & Password Ref not mounted");
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    console.log(email + " " + password);
-    console.log("All cookies:", document.cookie);
     try {
       setIsLoading(true);
       setError(null);
       const response = await login({ email, password });
       updateUser(response.data.user);
+      updateUserAuthentication(true);
     } catch (e) {
       if (e instanceof AppError) {
         console.log(e.details);
