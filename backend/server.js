@@ -23,7 +23,7 @@ app.use(express.json()); // middleware to parse body
 app.use("/api/auth", authRoutes);
 app.use(handleError);
 
-app.listen(PORT, () => {
+app.listen(PORT, "localhost", () => {
   connectDb();
   console.log(`Server is running on port ${PORT}`);
 });
