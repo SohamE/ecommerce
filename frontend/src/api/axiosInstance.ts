@@ -12,7 +12,7 @@ export const axiosAuthInstance = axios.create({
     'Access-Control-Allow-Credentials': true,
   }
 });
-axiosAuthInstance.interceptors.request.use(request => { console.log(request); return request; });
+axiosAuthInstance.interceptors.request.use(request => request);
 axiosAuthInstance.interceptors.response.use(
   (response) => response,
   (error: AxiosError<ApiError>) => {

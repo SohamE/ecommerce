@@ -1,9 +1,7 @@
-import { Link, Navigate, data, useNavigate } from "react-router";
+import { Link } from "react-router";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import React, { useEffect, useRef, useState } from "react";
-import { login } from "../../api/auth";
-import { AppError } from "../../types/errors";
+import React, { useRef, useState } from "react";
 import ErrorAlert from "../../components/ErrorAlert";
 import useAuthContext from "../../hooks/useAuthContext";
 
@@ -11,8 +9,7 @@ const Login = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<String | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const { updateUser, updateUserAuthentication } = useAuthContext();
+  const { login, loading } = useAuthContext();
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,24 +17,7 @@ const Login = () => {
       throw new Error("Email & Password Ref not mounted");
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    try {
-      setIsLoading(true);
-      setError(null);
-      const response = await login({ email, password });
-      updateUser(response.data.user);
-      updateUserAuthentication(true);
-    } catch (e) {
-      if (e instanceof AppError) {
-        console.log(e.details);
-        setError(e.message);
-      } else if (e instanceof Error) {
-        setError(e.message);
-      } else {
-        setError("An unexpected error occurred");
-      }
-    } finally {
-      setIsLoading(false);
-    }
+    await login({ email, password });
   };
 
   return (
@@ -76,7 +56,7 @@ const Login = () => {
                 color="success"
                 className="w-[100%]"
                 type="submit"
-                disabled={isLoading}
+                disabled={loading}
               >
                 Login
               </Button>

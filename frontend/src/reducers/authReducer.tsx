@@ -1,23 +1,19 @@
-import type { UserType } from "../types/user";
+import type { AuthContextType } from "../context/AuthContextProvider";
 
-export type AuthType = {
-  user: UserType | undefined;
-  isAuthenticated: Boolean;
-  isLoading: Boolean;
-};
+export type AuthType = Pick<
+  AuthContextType,
+  "user" | "loading" | "checkingAuth"
+>;
 
 type ActionType =
-  | {
-      type: "AUTHENTICATE_USER";
-      payload: AuthType["isAuthenticated"];
-    }
-  | { type: "UPDATE_USER"; payload: AuthType["user"] }
-  | { type: "SET_LOADER"; payload: AuthType["isLoading"] };
+  | { type: "SET_USER"; payload: AuthType["user"] }
+  | { type: "SET_LOADING"; payload: AuthType["loading"] }
+  | { type: "SET_CHECK_AUTH"; payload: AuthType["checkingAuth"] };
 
 export const initialState: AuthType = {
   user: undefined,
-  isAuthenticated: false,
-  isLoading: false,
+  loading: true,
+  checkingAuth: true,
 };
 
 export const authReducer = (
@@ -25,21 +21,20 @@ export const authReducer = (
   action: ActionType
 ): AuthType => {
   switch (action.type) {
-    case "AUTHENTICATE_USER":
-      return {
-        ...state,
-        isAuthenticated: action.payload,
-      };
-      break;
-    case "UPDATE_USER":
+    case "SET_USER":
       return {
         ...state,
         user: action.payload,
       };
-    case "SET_LOADER":
+    case "SET_LOADING":
       return {
         ...state,
-        isLoading: action.payload,
+        loading: action.payload,
+      };
+    case "SET_CHECK_AUTH":
+      return {
+        ...state,
+        checkingAuth: action.payload,
       };
     default:
       return state;

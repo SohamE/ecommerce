@@ -6,10 +6,10 @@ type GuestRouteProps = {
 };
 
 const GuestRoute = ({ children }: GuestRouteProps) => {
-  const { authState } = useAuthContext();
+  const { user } = useAuthContext();
 
   // If authenticated, redirect to home
-  if (authState.user) {
+  if (user) {
     return <Navigate to="/" replace />;
   }
 

@@ -2,15 +2,16 @@ import { Link } from "react-router";
 import useAuthContext from "../../hooks/useAuthContext";
 
 const UserButton = () => {
-  const { authState } = useAuthContext();
+  const { logout, user, checkingAuth } = useAuthContext();
+  if (checkingAuth) {
+    return <h1>Loading user...</h1>;
+  }
 
-  if (authState.isAuthenticated) {
+  if (user) {
     return (
       <div className="">
-        <button>
-          <Link to="/logout" className="link mr-2">
-            Logout
-          </Link>
+        <button onClick={logout} className="link mr-2">
+          Logout
         </button>
       </div>
     );
