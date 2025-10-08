@@ -39,10 +39,6 @@ const baseRouter = createBrowserRouter([
           </GuestRoute>
         ),
       },
-      {
-        path: "/logout",
-        element: <Logout />,
-      },
     ],
   },
 ]);

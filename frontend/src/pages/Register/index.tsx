@@ -1,10 +1,7 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { useEffect, useRef, useState } from "react";
-import { signup } from "../../api/auth";
+import { useRef, useState } from "react";
 import ErrorAlert from "../../components/ErrorAlert";
-import { AppError } from "../../types/errors";
-import { useNavigate } from "react-router";
 import useAuthContext from "../../hooks/useAuthContext";
 
 const CONFIRM_PASSWORD_NOT_MATCHING = "Password is not matching";
@@ -15,9 +12,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassWord] = useState("");
   const [confirmPasswordError, setConfirmPassWordError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<String | null>(null);
-  const { updateUser, updateUserAuthentication } = useAuthContext();
+  const { signup, loading: isLoading } = useAuthContext();
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,23 +22,7 @@ const Register = () => {
     const email = emailRef.current.value;
     const name = nameRef.current.value;
 
-    try {
-      setIsLoading(true);
-      setError(null);
-      const response = await signup({ email, password, name });
-      updateUser(response.data.user);
-      updateUserAuthentication(true);
-    } catch (e) {
-      if (e instanceof AppError) {
-        setError(e.message);
-      } else if (e instanceof Error) {
-        setError(e.message);
-      } else {
-        setError("An unexpected error occurred");
-      }
-    } finally {
-      setIsLoading(false);
-    }
+    signup({ email, name, password });
   };
 
   const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
