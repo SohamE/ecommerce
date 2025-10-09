@@ -72,6 +72,7 @@ const AuthContextProvider: React.FC<AuthContextProviderPropsType> = ({
 
   const checkAuth = async () => {
     dispatch({ type: "SET_CHECK_AUTH", payload: true });
+    dispatch({ type: "SET_LOADING", payload: true });
     try {
       const res = await apiCheckAuth();
       dispatch({ type: "SET_USER", payload: res.data.user });
@@ -79,6 +80,7 @@ const AuthContextProvider: React.FC<AuthContextProviderPropsType> = ({
       handleError(e);
     } finally {
       dispatch({ type: "SET_CHECK_AUTH", payload: false });
+      dispatch({ type: "SET_LOADING", payload: false });
     }
   };
   const logout = async () => {

@@ -1,1 +1,1 @@
-export const delay = (req, res, next) => setTimeout(next, 5000);
+export const delay = (req, res, next) => setTimeout(next, 30000);

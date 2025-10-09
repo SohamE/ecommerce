@@ -1,8 +1,11 @@
 import { Link } from "react-router";
 import Search from "../Search";
-import UserButton from "../UserButton";
+import { Suspense, lazy } from "react";
+import useAuthContext from "../../hooks/useAuthContext";
+const UserButton = lazy(() => import("../UserButton"));
 
 const Header = () => {
+  const { checkingAuth } = useAuthContext();
   return (
     <header>
       <div className="py-2 border-t-1 border-b-1 border-light-gray">
@@ -40,7 +43,9 @@ const Header = () => {
             <Search />
           </div>
           <div className="col3 w-[25%] flex justify-around items-center">
-            <UserButton />
+            <Suspense fallback={<p>Loading user component ...</p>}>
+              {checkingAuth == true ? "Loading User ..." : <UserButton />}
+            </Suspense>
           </div>
         </div>
       </div>
